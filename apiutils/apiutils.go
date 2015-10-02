@@ -9,9 +9,10 @@ import (
 	"github.com/alebaffa/wanikani-webapp/structures"
 )
 
+/*GetStudyQueue gets the*/
 func GetStudyQueue() structures.User {
 	var user structures.User
-	jsonResponse, err := FetchJson("study-queue")
+	jsonResponse, err := FetchJSON("study-queue")
 
 	if err != nil {
 		panic(err)
@@ -26,9 +27,10 @@ func GetStudyQueue() structures.User {
 	return user
 }
 
+/*GetKanjiList gets the list of kanji*/
 func GetKanjiList(level string) structures.User {
 	var user structures.User
-	jsonResponse, err := FetchJson("kanji/" + level)
+	jsonResponse, err := FetchJSON("kanji/" + level)
 
 	if err != nil {
 		panic(err)
@@ -43,9 +45,9 @@ func GetKanjiList(level string) structures.User {
 	return user
 }
 
-/* fetch the json response from the API */
-func FetchJson(api string) ([]byte, error) {
-	resp := getHttpResponse(api)
+/*FetchJSON fetches the json response from the API*/
+func FetchJSON(api string) ([]byte, error) {
+	resp := getHTTPResponse(api)
 	defer resp.Body.Close()
 	json, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -55,7 +57,7 @@ func FetchJson(api string) ([]byte, error) {
 }
 
 /* connect to the API and return the Http.Response */
-func getHttpResponse(api string) *http.Response {
+func getHTTPResponse(api string) *http.Response {
 	url := "https://www.wanikani.com/api/user/" + assets.APIKey + "/" + api
 	resp, err := http.Get(url)
 	if err != nil {
